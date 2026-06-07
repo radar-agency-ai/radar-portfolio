@@ -25,7 +25,7 @@ function Home({ navigate }){
             <div className="col" style={{alignItems:"flex-end", gap:18}}>
               <div className="flex center gap-s mono-sm muted">
                 <Arrow d="down" s={11}/>
-                <span>Scrollez pour découvrir le studio</span>
+                <span>Découvrez le studio</span>
               </div>
               <button className="btn-dark" onClick={()=>navigate("savoir-faire")}>Voir le travail <Arrow d="right"/></button>
             </div>
@@ -168,7 +168,7 @@ function Contact(){
 }
 
 function Footer({ navigate, page }){
-  const links = [["index","Index"],["savoir-faire","Savoir-faire"],["studio","Studio"],["contact","Contact"]];
+  const links = [["index","Home"],["savoir-faire","Savoir-faire"],["studio","Studio"],["contact","Contact"]];
   return (
     <footer className="footer">
       <div className="wrap" style={{paddingBlock:"clamp(36px,5vh,64px)"}}>
