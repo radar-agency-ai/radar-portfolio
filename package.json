@@ -1,0 +1,10 @@
+{
+  "name": "radar-portfolio",
+  "version": "1.0.0",
+  "description": "Radar — Studio de création web · Paris",
+  "scripts": {
+    "dev": "python -m http.server 3333",
+    "build": "echo 'Static site — no build step'",
+    "start": "python -m http.server 3333"
+  }
+}
