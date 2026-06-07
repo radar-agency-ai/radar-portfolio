@@ -215,9 +215,31 @@ h1,h2,h3,h4,p{ margin:0; }
 .hero__scroll{ position:absolute; left:50%; transform:translateX(-50%); bottom:clamp(28px,5vh,52px); z-index:2; color:var(--muted); }
 @keyframes scrollPulse{ 0%,100%{ transform:scaleY(.3); opacity:.4;} 50%{ transform:scaleY(1); opacity:1;} }
 
-/* marquee video */
-.marquee-video{ overflow:hidden; border-block:1px solid var(--line); background:var(--paper); line-height:0; }
-.marquee-video video{ display:block; width:100%; height:auto; object-fit:cover; }
+/* hero video background */
+.hero--video{ color:#fff; }
+.hero--video .hero__bg{ z-index:0; }
+.hero__video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.hero__veil{ position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(8,8,8,.30) 0%, rgba(8,8,8,.20) 38%, rgba(8,8,8,.72) 100%);
+}
+.hero__head--light, .hero__head--light .display{ color:#fff; }
+.hero__head--light .lede{ color:rgba(255,255,255,.86); }
+.hero__head--light .mono-sm{ color:rgba(255,255,255,.7); }
+.eyebrow--light{ color:rgba(255,255,255,.72); }
+.eyebrow--light .idx{ color:#fff; }
+.eyebrow--light .ln{ background:rgba(255,255,255,.4); }
+
+.btn-light{ background:#fff; color:var(--ink); border-radius:40px; padding:11px 20px; font-family:var(--mono); font-size:10.5px; letter-spacing:.13em; text-transform:uppercase; display:inline-flex; gap:10px; align-items:center; transition:opacity var(--t-fast),transform var(--t-fast); }
+.btn-light:hover{ opacity:.88; transform:translateY(-1px); }
+
+/* typewriter banner */
+.typeband{ border-block:1px solid var(--line); background:var(--ink); color:#fff; }
+.typeband__inner{ display:flex; align-items:center; gap:clamp(16px,3vw,40px); min-height:clamp(72px,11vh,120px); padding-block:18px; }
+.typeband__idx{ color:rgba(255,255,255,.45); flex:none; }
+.typeband__text{ font-family:var(--serif); font-weight:300; letter-spacing:-.01em; font-size:clamp(24px,4vw,52px); line-height:1.1; display:inline-flex; align-items:center; min-height:1.2em; }
+.typeband__caret{ display:inline-block; width:2px; height:1em; margin-left:.1em; background:#fff; transform:translateY(.08em); animation:caretBlink 1s steps(1) infinite; }
+@keyframes caretBlink{ 0%,49%{ opacity:1; } 50%,100%{ opacity:0; } }
+@media (prefers-reduced-motion: reduce){ .typeband__caret{ animation:none; } }
 
 /* stats */
 .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-block:1px solid var(--line); }
