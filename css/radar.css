@@ -215,12 +215,9 @@ h1,h2,h3,h4,p{ margin:0; }
 .hero__scroll{ position:absolute; left:50%; transform:translateX(-50%); bottom:clamp(28px,5vh,52px); z-index:2; color:var(--muted); }
 @keyframes scrollPulse{ 0%,100%{ transform:scaleY(.3); opacity:.4;} 50%{ transform:scaleY(1); opacity:1;} }
 
-/* marquee */
-.marquee{ overflow:hidden; border-block:1px solid var(--line); padding-block:18px; white-space:nowrap; }
-.marquee__row{ display:inline-flex; gap:48px; align-items:center; animation:marq 28s linear infinite; }
-.marquee__row span{ font-family:var(--serif); font-weight:300; font-size:clamp(22px,2.6vw,40px); letter-spacing:-.01em; display:inline-flex; gap:48px; align-items:center; }
-.marquee__row span::after{ content:"—"; color:var(--faint); }
-@keyframes marq{ to{ transform:translateX(-50%);} }
+/* marquee video */
+.marquee-video{ overflow:hidden; border-block:1px solid var(--line); background:var(--paper); line-height:0; }
+.marquee-video video{ display:block; width:100%; height:auto; object-fit:cover; }
 
 /* stats */
 .stats{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border-block:1px solid var(--line); }

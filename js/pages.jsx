@@ -32,11 +32,16 @@ function Home({ navigate }){
         </div>
       </section>
 
-      {/* MARQUEE */}
-      <div className="marquee">
-        <div className="marquee__row">
-          <span>{services.join(" ")}</span><span>{services.join(" ")}</span>
-        </div>
+      {/* MARQUEE VIDEO */}
+      <div className="marquee-video">
+        <video
+          src="assets/MarqueeMotion.mp4"
+          autoPlay
+          muted
+          loop
+          playsInline
+          aria-label="Bannière animée des savoir-faire Radar"
+        />
       </div>
 
       {/* MANIFESTE */}
