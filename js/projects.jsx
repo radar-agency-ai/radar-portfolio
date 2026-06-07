@@ -185,8 +185,8 @@ function ProjectShowcase(){
       <div className={`pgrid ${ep?"is-detail":""}`} style={ep?{gridAutoRows:"auto"}:null}>
         {ordered.map((p, i)=>{
           const isHero = ep && p.id===expanded;
-          const span = ep ? (isHero?12:3) : p.span;
-          const ar = isHero ? "16/9" : (ep ? "4/3" : p.ar);
+          const span = ep ? (isHero?12:3) : 4;
+          const ar = isHero ? "16/9" : (ep ? "4/3" : "4/3");
           return (
             <div
               key={p.id}

@@ -8,9 +8,8 @@ function Home({ navigate }){
   const services = ["Direction artistique","Design system","Développement React","Headless CMS","Motion & WebGL","SEO / GEO","Performance","Accessibilité"];
   const stats = [
     { n:3,   suf:"",  l:"associés, trois métiers" },
-    { n:11,  suf:"",  l:"ans d’expérience cumulés" },
-    { n:100, suf:"%", l:"sur-mesure, zéro template" },
-    { n:0,   suf:"",  l:"projet livré au hasard" },
+ { n:7,   suf:"",  l:"ans d’expérience cumulés" },
+ { n:100, suf:"%", l:"sur-mesure, zéro template" },
   ];
   return (
     <div className="page page-enter">
@@ -45,9 +44,9 @@ function Home({ navigate }){
         <div className="eyebrow" style={{marginBottom:"clamp(30px,5vh,60px)"}}><span className="idx">R—02</span> Manifeste</div>
         <RevealText tag="h2" className="h-xl" stagger={34}
           text="La forme suit le projet. Pas l'inverse." />
-        <Reveal delay={2} className="cap-head" style={{marginTop:"clamp(40px,6vh,80px)"}}>
+        <Reveal delay={2} style={{marginTop:"clamp(40px,6vh,80px)"}}>
           <p className="lede ink2 maxw-46">Nous travaillons avec des agences qui savent ce qu'elles veulent montrer. Notre rôle : que le site soit à la hauteur du travail qu'il présente.</p>
-          <p className="ink2 maxw-46" style={{alignSelf:"end",fontSize:17}}>Un projet actif à la fois. C'est le prix de la précision.</p>
+          <p className="lede ink2 maxw-46" style={{marginTop:"clamp(24px,3vh,40px)"}}>Un projet actif à la fois. C'est le prix de la précision.</p>
         </Reveal>
       </section>
 
@@ -152,7 +151,7 @@ function Contact(){
         <RevealText tag="h2" className="h-xl" stagger={36}
           text="Un projet en tête ? On écoute d'abord." />
         <div className="cap-head" style={{marginTop:"clamp(40px,6vh,80px)",alignItems:"end"}}>
-          <a className="big" href="mailto:bonjour@radar.studio">bonjour@radar.studio <Arrow d="right" s={26}/></a>
+          <a className="big" href="mailto:contact.radar.paris@gmail.com">contact.radar.paris@gmail.com <Arrow d="right" s={26}/></a>
           <div className="col gap-m" style={{alignSelf:"end"}}>
             <div><div className="mono">Studio</div><div style={{marginTop:8,opacity:.85}}>Paris</div></div>
           </div>
