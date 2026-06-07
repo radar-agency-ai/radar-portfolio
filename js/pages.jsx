@@ -59,6 +59,10 @@ function Typewriter({ phrases }){
 
 /* ---------------- INDEX / HOME ---------------- */
 function Home({ navigate }){
+  const [reducedMotion, setReducedMotion] = pgUseState(false);
+  pgUseEffect(()=>{
+    setReducedMotion(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  },[]);
   const services = ["Direction artistique","Design system","Développement React","Headless CMS","Motion & WebGL","SEO / GEO","Performance","Accessibilité"];
   const typePhrases = [
     "Direction artistique",
@@ -78,20 +82,23 @@ function Home({ navigate }){
   return (
     <div className="page page-enter">
       {/* HERO */}
-      <section className="hero hero--video wrap">
+      <section className="hero hero--video">
         <div className="hero__bg">
-          <video
-            className="hero__video"
-            src="assets/MarqueeMotion.mp4"
-            autoPlay
-            muted
-            loop
-            playsInline
-            aria-hidden="true"
-          />
+          {!reducedMotion && (
+            <video
+              className="hero__video"
+              src="assets/MarqueeMotion.mp4"
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+              aria-hidden="true"
+            />
+          )}
           <div className="hero__veil" />
         </div>
-        <div className="hero__head hero__head--light">
+        <div className="hero__head hero__head--light wrap">
           <div className="eyebrow eyebrow--light" style={{marginBottom:"clamp(24px,4vh,46px)"}}><span className="idx">R—01</span> Studio de création web <span className="ln" style={{maxWidth:120}}/> Paris · FR</div>
           <h1 className="display">Sites sur-mesure.</h1>
           <div className="hero__sub">
@@ -219,12 +226,18 @@ function Contact(){
     <section className="contact">
       <div className="wrap section">
         <div className="eyebrow" style={{marginBottom:"clamp(30px,5vh,60px)"}}><span className="idx" style={{color:"#fff"}}>05</span> Contact <span className="ln"/> Parlons-en</div>
-        <RevealText tag="h2" className="h-xl" stagger={36}
-          text="Un projet en tête ? On écoute d'abord." />
-        <div className="cap-head" style={{marginTop:"clamp(40px,6vh,80px)",alignItems:"end"}}>
-          <a className="big" href="mailto:contact.radar.paris@gmail.com">contact.radar.paris@gmail.com <Arrow d="right" s={26}/></a>
-          <div className="col gap-m" style={{alignSelf:"end"}}>
-            <div><div className="mono">Studio</div><div style={{marginTop:8,opacity:.85}}>Paris</div></div>
+        <div className="contact__grid">
+          <div className="contact__main">
+            <RevealText tag="h2" className="h-xl" stagger={36}
+              text="Un projet en tête ? On écoute d'abord." />
+            <a className="big" href="mailto:contact.radar.paris@gmail.com" style={{marginTop:"clamp(32px,5vh,56px)"}}>contact.radar.paris@gmail.com <Arrow d="right" s={22}/></a>
+            <div className="flex" style={{marginTop:"clamp(28px,4vh,46px)", gap:48, flexWrap:"wrap"}}>
+              <div><div className="mono">Studio</div><div style={{marginTop:8,opacity:.85}}>Paris</div></div>
+              <div><div className="mono">Réponse</div><div style={{marginTop:8,opacity:.85}}>Sous 24 h</div></div>
+            </div>
+          </div>
+          <div className="contact__card">
+            <BusinessCard />
           </div>
         </div>
       </div>

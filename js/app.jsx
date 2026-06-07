@@ -36,6 +36,7 @@ function Loader({ onDone }){
 function Nav({ page, navigate }){
   const [hidden, setHidden] = aUseState(false);
   const [scrolled, setScrolled] = aUseState(false);
+  const [menuOpen, setMenuOpen] = aUseState(false);
   aUseEffect(()=>{
     let prev = window.scrollY;
     let ticking = false;
@@ -63,20 +64,56 @@ function Nav({ page, navigate }){
     onScroll();
     return ()=>{ window.removeEventListener("scroll", onScroll); window.removeEventListener("mousemove", onMove); };
   },[]);
+
+  // verrouille le scroll du body quand le menu mobile est ouvert
+  aUseEffect(()=>{
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+    return ()=>{ document.body.style.overflow = ""; };
+  },[menuOpen]);
+
+  const go = (id)=>{ setMenuOpen(false); navigate(id); };
+
   return (
-    <nav className={`nav ${hidden?"is-hidden":""} ${scrolled?"is-blur":""}`}>
-      <button className="nav__brand" onClick={()=>navigate("index")}>
-        Radar<span className="dot"/>
-      </button>
-      <div className="nav__links">
-        {PAGES.map(p=>(
-          <button key={p.id} className={`nav__link ${page===p.id?"is-active":""}`} onClick={()=>navigate(p.id)}>
-            <span className="num">{p.num}</span>{p.label}
+    <>
+      <nav className={`nav ${hidden?"is-hidden":""} ${scrolled?"is-blur":""}`}>
+        <button className="nav__brand" onClick={()=>navigate("index")}>
+          Radar<span className="dot"/>
+        </button>
+        <div className="nav__links">
+          {PAGES.map(p=>(
+            <button key={p.id} className={`nav__link ${page===p.id?"is-active":""}`} onClick={()=>navigate(p.id)}>
+              <span className="num">{p.num}</span>{p.label}
+            </button>
+          ))}
+        </div>
+        <button className="nav__cta" onClick={()=>navigate("contact")}>Prendre contact</button>
+        <button className="nav__menu-btn" aria-label="Ouvrir le menu" aria-expanded={menuOpen} onClick={()=>setMenuOpen(true)}>
+          <span/><span/><span/>
+        </button>
+      </nav>
+
+      <div className={`nav__scrim ${menuOpen?"is-open":""}`} onClick={()=>setMenuOpen(false)} />
+
+      <aside className={`nav__panel ${menuOpen?"is-open":""}`} aria-hidden={!menuOpen}>
+        <div className="nav__panel__head">
+          <span className="mono">Menu</span>
+          <button className="nav__panel__close" aria-label="Fermer le menu" onClick={()=>setMenuOpen(false)}>
+            <span/><span/>
           </button>
-        ))}
-      </div>
-      <button className="nav__cta" onClick={()=>navigate("contact")}>Prendre contact</button>
-    </nav>
+        </div>
+        <nav className="nav__panel__links">
+          {PAGES.map(p=>(
+            <button key={p.id} className={page===p.id?"is-active":""} onClick={()=>go(p.id)}>
+              <span className="num">{p.num}</span>{p.label}
+            </button>
+          ))}
+        </nav>
+        <div className="nav__panel__foot">
+          <button className="btn-light" onClick={()=>go("contact")}>Prendre contact <span aria-hidden="true">→</span></button>
+          <div className="mono-sm">Studio de création web · Paris · FR</div>
+        </div>
+      </aside>
+    </>
   );
 }
 
