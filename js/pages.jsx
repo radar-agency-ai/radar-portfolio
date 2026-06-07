@@ -151,7 +151,7 @@ function Contact(){
         <RevealText tag="h2" className="h-xl" stagger={36}
           text="Un projet en tête ? On écoute d'abord." />
         <div className="cap-head" style={{marginTop:"clamp(40px,6vh,80px)",alignItems:"end"}}>
-          <a className="big" href="mailto:bonjour@radar.studio">bonjour@radar.studio <Arrow d="right" s={26}/></a>
+          <a className="big" href="mailto:contact.radar.paris@gmail.com">contact.radar.paris@gmail.com <Arrow d="right" s={26}/></a>
           <div className="col gap-m" style={{alignSelf:"end"}}>
             <div><div className="mono">Studio</div><div style={{marginTop:8,opacity:.85}}>Paris</div></div>
           </div>

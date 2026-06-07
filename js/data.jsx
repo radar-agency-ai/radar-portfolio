@@ -78,7 +78,7 @@ const RADAR = [
 ];
 
 const CAPABILITIES = [
-  { id:"grid",   k:"Grille vivante",     d:"Une grille modulaire asymétrique qui se réorganise sous les yeux au clic — sans rechargement." },
+  { id:"grid",   k:"Grille symétrique",   d:"Une grille modulaire symétrique qui se réorganise sous les yeux au clic — sans rechargement." },
   { id:"modes",  k:"Triple lecture",     d:"Chaque projet en trois regards : Image, Dessin, Plans. Une UX propre à l’agence." },
   { id:"plan",   k:"Lecture des plans",  d:"Visionneur haute définition avec zoom et déplacement — coupes et détails enfin lisibles." },
   { id:"focus",  k:"Mode Focus",         d:"Un clic efface toute l’interface. Contemplation plein écran des espaces et de la lumière." },

@@ -58,7 +58,7 @@ function SavoirFaire(){
         {tab==="projets" && (
           <div>
             <div className="flex between center mb-l" style={{flexWrap:"wrap",gap:16}}>
-              <h2 className="h-md">Projets — grille vivante</h2>
+              <h2 className="h-md">Projets — grille symétrique</h2>
               <div className="mono muted maxw-38" style={{textAlign:"right"}}>Survol : données du projet · Clic : la grille se réorganise et révèle le détail</div>
             </div>
             <ProjectShowcase />
