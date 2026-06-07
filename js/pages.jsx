@@ -1,11 +1,75 @@
 /* ============================================================
    PAGES — Index (home), Studio (Radar team), Contact, Footer
    ============================================================ */
-const { useState:pgUseState } = React;
+const { useState:pgUseState, useEffect:pgUseEffect, useRef:pgUseRef } = React;
+
+/* ---------------- TYPEWRITER BANNER ---------------- */
+function Typewriter({ phrases }){
+  const [idx, setIdx] = pgUseState(0);
+  const [text, setText] = pgUseState("");
+  const [phase, setPhase] = pgUseState("typing"); // typing | pausing | deleting
+  const reduced = pgUseRef(false);
+
+  pgUseEffect(()=>{
+    reduced.current = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  },[]);
+
+  pgUseEffect(()=>{
+    const full = phrases[idx];
+
+    // reduced motion: just show full phrase, cycle slowly
+    if(reduced.current){
+      setText(full);
+      const t = setTimeout(()=>setIdx((idx+1)%phrases.length), 2600);
+      return ()=>clearTimeout(t);
+    }
+
+    let t;
+    if(phase === "typing"){
+      if(text.length < full.length){
+        t = setTimeout(()=>setText(full.slice(0, text.length+1)), 55);
+      } else {
+        t = setTimeout(()=>setPhase("pausing"), 1500);
+      }
+    } else if(phase === "pausing"){
+      t = setTimeout(()=>setPhase("deleting"), 200);
+    } else if(phase === "deleting"){
+      if(text.length > 0){
+        t = setTimeout(()=>setText(full.slice(0, text.length-1)), 26);
+      } else {
+        setPhase("typing");
+        setIdx((idx+1)%phrases.length);
+      }
+    }
+    return ()=>clearTimeout(t);
+  },[text, phase, idx, phrases]);
+
+  return (
+    <div className="typeband">
+      <div className="typeband__inner wrap">
+        <span className="typeband__idx mono">Ce qu&apos;on livre</span>
+        <span className="typeband__text">
+          {text}
+          <span className="typeband__caret" aria-hidden="true" />
+        </span>
+      </div>
+    </div>
+  );
+}
 
 /* ---------------- INDEX / HOME ---------------- */
 function Home({ navigate }){
   const services = ["Direction artistique","Design system","Développement React","Headless CMS","Motion & WebGL","SEO / GEO","Performance","Accessibilité"];
+  const typePhrases = [
+    "Direction artistique",
+    "Une identité visuelle cohérente",
+    "Un site développé sur mesure",
+    "Un contenu facile à gérer",
+    "Des animations qui captivent",
+    "Trouvé en priorité par les IA et sur Google",
+    "Un site qui se charge en un instant",
+    "Accessible à tous",
+  ];
   const stats = [
     { n:3,   suf:"",  l:"associés, trois métiers" },
  { n:7,   suf:"",  l:"ans d’expérience cumulés" },
@@ -14,30 +78,37 @@ function Home({ navigate }){
   return (
     <div className="page page-enter">
       {/* HERO */}
-      <section className="hero wrap">
-        <div className="hero__bg"><div className="hero__grid" /></div>
-        <div className="hero__head">
-          <div className="eyebrow" style={{marginBottom:"clamp(24px,4vh,46px)"}}><span className="idx">R—01</span> Studio de création web <span className="ln" style={{maxWidth:120}}/> Paris · FR</div>
+      <section className="hero hero--video wrap">
+        <div className="hero__bg">
+          <video
+            className="hero__video"
+            src="assets/MarqueeMotion.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden="true"
+          />
+          <div className="hero__veil" />
+        </div>
+        <div className="hero__head hero__head--light">
+          <div className="eyebrow eyebrow--light" style={{marginBottom:"clamp(24px,4vh,46px)"}}><span className="idx">R—01</span> Studio de création web <span className="ln" style={{maxWidth:120}}/> Paris · FR</div>
           <h1 className="display">Sites sur-mesure.</h1>
           <div className="hero__sub">
-            <p className="lede ink2">Radar conçoit et développe — de la direction artistique au code. Trois associés, un projet à la fois.</p>
+            <p className="lede maxw-46">Radar conçoit et développe — de la direction artistique au code. Trois associés, un projet à la fois.</p>
             <div className="col" style={{alignItems:"flex-end", gap:18}}>
-              <div className="flex center gap-s mono-sm muted">
+              <div className="flex center gap-s mono-sm">
                 <Arrow d="down" s={11}/>
                 <span>Découvrez le studio</span>
               </div>
-              <button className="btn-dark" onClick={()=>navigate("savoir-faire")}>Voir le travail <Arrow d="right"/></button>
+              <button className="btn-light" onClick={()=>navigate("savoir-faire")}>Voir le travail <Arrow d="right"/></button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* MARQUEE */}
-      <div className="marquee">
-        <div className="marquee__row">
-          <span>{services.join(" ")}</span><span>{services.join(" ")}</span>
-        </div>
-      </div>
+      {/* TYPEWRITER BANNER */}
+      <Typewriter phrases={typePhrases} />
 
       {/* MANIFESTE */}
       <section className="section wrap">
