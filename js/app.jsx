@@ -4,7 +4,7 @@
 const { useState:aUseState, useEffect:aUseEffect, useRef:aUseRef } = React;
 
 const PAGES = [
-  { id:"index", label:"Index", num:"01" },
+  { id:"index", label:"Home", num:"01" },
   { id:"savoir-faire", label:"Savoir-faire", num:"02" },
   { id:"studio", label:"Studio", num:"03" },
   { id:"contact", label:"Contact", num:"04" },
