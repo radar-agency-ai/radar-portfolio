@@ -155,11 +155,6 @@ function Contact(){
           <a className="big" href="mailto:bonjour@radar.studio">bonjour@radar.studio <Arrow d="right" s={26}/></a>
           <div className="col gap-m" style={{alignSelf:"end"}}>
             <div><div className="mono">Studio</div><div style={{marginTop:8,opacity:.85}}>Paris</div></div>
-            <div className="flex gap-l mono">
-              <a href="#" onClick={e=>e.preventDefault()}>Instagram</a>
-              <a href="#" onClick={e=>e.preventDefault()}>LinkedIn</a>
-              <a href="#" onClick={e=>e.preventDefault()}>Behance</a>
-            </div>
           </div>
         </div>
       </div>
@@ -183,7 +178,7 @@ function Footer({ navigate, page }){
         </div>
         <div className="rule" style={{margin:"32px 0 18px"}}/>
         <div className="flex between mono-sm" style={{opacity:.55,flexWrap:"wrap",gap:10}}>
-          <span>© {new Date().getFullYear()} Radar Studio — maquette de démonstration</span>
+          <span>© {new Date().getFullYear()} Radar Studio</span>
           <span>Conçu & développé sur-mesure</span>
         </div>
       </div>

@@ -259,8 +259,8 @@ h1,h2,h3,h4,p{ margin:0; }
 .pcard__top{ display:flex; justify-content:space-between; align-items:flex-start; }
 .pcard__name{ font-family:var(--serif); font-weight:340; letter-spacing:-.01em; line-height:1.02; font-size:clamp(20px,1.7vw,30px); }
 .pcard__meta{ display:flex; flex-wrap:wrap; gap:6px 18px; color:var(--ink-2); }
-.pcard__idx{ position:absolute; top:14px; left:16px; z-index:3; color:var(--muted); }
-.pcard:hover .pcard__idx{ color:var(--ink); }
+.pcard__idx{ position:absolute; top:14px; left:16px; z-index:3; color:var(--muted); transition:opacity var(--t-med); }
+.pcard:hover .pcard__idx{ opacity:0; }
 
 /* detail (expanded) */
 .pdetail{ display:grid; grid-template-columns:1fr; gap:0; }
