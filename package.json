@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Radar — Studio de création web · Paris",
   "scripts": {
-    "dev": "python -m http.server 3333",
+    "dev": "npx serve . -p 3000",
     "build": "echo 'Static site — no build step'",
-    "start": "python -m http.server 3333"
+    "start": "npx serve . -p 3000"
   }
 }
