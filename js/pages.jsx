@@ -46,7 +46,7 @@ function Home({ navigate }){
           text="La forme suit le projet. Pas l'inverse." />
         <Reveal delay={2} style={{marginTop:"clamp(40px,6vh,80px)"}}>
           <p className="lede ink2 maxw-46">Nous travaillons avec des agences qui savent ce qu'elles veulent montrer. Notre rôle : que le site soit à la hauteur du travail qu'il présente.</p>
-          <p className="ink2 maxw-46" style={{marginTop:"clamp(24px,3vh,40px)",fontSize:17}}>Un projet actif à la fois. C'est le prix de la précision.</p>
+          <p className="lede ink2 maxw-46" style={{marginTop:"clamp(24px,3vh,40px)"}}>Un projet actif à la fois. C'est le prix de la précision.</p>
         </Reveal>
       </section>
 
