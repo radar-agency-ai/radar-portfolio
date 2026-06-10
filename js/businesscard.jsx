@@ -140,8 +140,8 @@
     company = "Radar",
     monogram = "R",
     email = "contact.radar.paris@gmail.com",
-    phone = "+33 6 03 62 20 81",
-    tel = "+33603622081",          // E.164 — used for the tap-to-call link
+    phone = "+33 7 67 66 13 27",
+    tel = "+33767661327",          // E.164 — used for the tap-to-call link
     website = "radar.paris",
     location = "Paris · 48.85°N",
     index = "05",
