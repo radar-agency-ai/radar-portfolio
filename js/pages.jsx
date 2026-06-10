@@ -206,9 +206,11 @@ function Studio({ navigate }){
       {/* approach */}
       <section className="section wrap">
         <div className="eyebrow" style={{marginBottom:40}}><span className="idx">04.1</span> Comment on travaille</div>
-        <div className="lifeband">
+        <div className="lifeband approach">
+          <Reveal as="span" className="approach__line" aria-hidden="true" />
           {[["Stratégie","On cadre l’intention avant la forme. Audience, objectifs, mesure."],["Conception","Direction artistique, système, prototype cliquable validé avec vous."],["Développement","Front sur-mesure, CMS headless, vous restez autonome sur le contenu."],["Pérennité","Performance, accessibilité, suivi. Un ouvrage qui tient dans le temps."]].map((s,i)=>(
-            <Reveal key={i} delay={i+1} style={{gridColumn:"span 3",borderTop:"1px solid var(--line)",paddingTop:18}}>
+            <Reveal key={i} delay={i+1} className="approach__step" style={{gridColumn:"span 3",borderTop:"1px solid var(--line)",paddingTop:18}}>
+              <span className="approach__node" aria-hidden="true" />
               <div className="mono muted" style={{marginBottom:14}}>{String(i+1).padStart(2,"0")}</div>
               <h3 className="h-md" style={{fontSize:25}}>{s[0]}</h3>
               <p className="ink2" style={{marginTop:10,fontSize:16,lineHeight:1.45}}>{s[1]}</p>

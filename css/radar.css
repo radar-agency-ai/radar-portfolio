@@ -530,12 +530,31 @@ h1,h2,h3,h4,p{ margin:0; }
 /* touch devices — surface the hover-only affordances (info, labels) */
 @media (hover:none){
   .pcard__info{ opacity:1; transform:none; }
+  /* light scrim top + bottom so the title/meta never clash with the sketch lines */
   .pcard__info::before{ content:""; position:absolute; inset:0; z-index:-1;
-    background:linear-gradient(180deg, rgba(247,246,243,.04) 0%, rgba(247,246,243,.0) 30%, rgba(247,246,243,.86) 100%); }
+    background:linear-gradient(180deg,
+      rgba(246,245,242,.94) 0%, rgba(246,245,242,.55) 16%, rgba(246,245,242,0) 38%,
+      rgba(246,245,242,0) 60%, rgba(246,245,242,.6) 84%, rgba(246,245,242,.94) 100%); }
   .pcard__idx{ opacity:0; }
   .tcell__info{ opacity:1; }
   .map__pin .map__lbl{ opacity:1; transform:none; }
   .pcard__veil{ background:rgba(246,245,242,0); }
+}
+
+/* studio "comment on travaille" — vertical animated timeline on mobile */
+.approach__line, .approach__node{ display:none; }
+@media(max-width:680px){
+  .approach{ position:relative; grid-template-columns:1fr; padding-left:30px; }
+  .approach > .approach__step{ grid-column:1 / -1 !important; border-top:0 !important; padding-top:0 !important; padding-bottom:30px; position:relative; }
+  .approach > .approach__step:last-child{ padding-bottom:0; }
+  /* the guiding line, drawn from Stratégie down to Pérennité when scrolled into view */
+  .approach__line{ display:block; position:absolute; left:7px; top:7px; bottom:18px; width:1px;
+    background:var(--ink); transform-origin:top; }
+  .approach__line.reveal{ opacity:1 !important; transform:scaleY(0); transition:transform 1.2s cubic-bezier(.76,0,.24,1); }
+  .approach__line.reveal.in{ transform:scaleY(1); }
+  /* node on the line for each step */
+  .approach__node{ display:block; position:absolute; left:-27px; top:6px; width:9px; height:9px;
+    border-radius:50%; border:1px solid var(--ink); background:var(--paper); z-index:2; }
 }
 
 @media (prefers-reduced-motion: reduce){
