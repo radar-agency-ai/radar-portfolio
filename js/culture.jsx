@@ -1,13 +1,13 @@
 /* ============================================================
-   CULTURE / AGENCE demo — employer brand (dl-c, ~16 people)
+   CULTURE / AGENCE demo — employer brand (~16 people)
    ============================================================ */
 function CultureDemo(){
-  const team = window.TEAM_DLC, stats = window.CULTURE_STATS, values = window.CULTURE_VALUES;
+  const team = window.TEAM_AGENCY, stats = window.CULTURE_STATS, values = window.CULTURE_VALUES;
   return (
     <div>
       <div className="cap-head" style={{marginBottom:54}}>
         <div>
-          <Reveal><h3 className="h-lg">L’atelier dl-c.</h3></Reveal>
+          <Reveal><h3 className="h-lg">L’atelier.</h3></Reveal>
           <RevealText className="lede ink2" style={{marginTop:20, maxWidth:"34ch"}}
             text="Seize personnes, un plateau, une table à dessin. La page qui donne envie aux jeunes talents de pousser la porte." />
         </div>
@@ -18,7 +18,7 @@ function CultureDemo(){
       </div>
 
       {/* stats */}
-      <div className="stats" style={{marginBottom:64}}>
+      <div className="stats stats--4" style={{marginBottom:64}}>
         {stats.map((s,i)=>(
           <Reveal as="div" className="stat" delay={i+1} key={i}>
             <div className="stat__n"><Counter to={s.n} suffix={s.suf} /></div>

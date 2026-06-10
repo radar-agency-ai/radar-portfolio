@@ -7,8 +7,10 @@ const { useState:rsUseState, useEffect:rsUseEffect, useRef:rsUseRef, useLayoutEf
 /* ---------------- PLAN LIGHTBOX ---------------- */
 function PlanLightbox({ project, onClose }){
   const [t, setT] = rsUseState({ s:1, x:0, y:0 });
-  const drag = rsUseRef(null);
   const stageRef = rsUseRef(null);
+  const ptrs = rsUseRef(new Map());      // active pointers (mouse + touch unified)
+  const pinch = rsUseRef(null);          // last pinch distance + centre
+  const pan = rsUseRef(null);            // last pan client position
   const [dragging, setDragging] = rsUseState(false);
 
   const clamp = (s)=>Math.min(5, Math.max(1, s));
@@ -16,7 +18,6 @@ function PlanLightbox({ project, onClose }){
     const ns = clamp(p.s*factor);
     if(ns===p.s) return p;
     const k = ns/p.s;
-    // zoom toward point (cx,cy) relative to centre
     const nx = cx - (cx - p.x)*k;
     const ny = cy - (cy - p.y)*k;
     return { s:ns, x: ns===1?0:nx, y: ns===1?0:ny };
@@ -29,19 +30,47 @@ function PlanLightbox({ project, onClose }){
     return ()=>{ window.removeEventListener("keydown", onKey); document.body.style.overflow=""; };
   },[]);
 
+  const centreOf = (a,b)=>{ const r=stageRef.current.getBoundingClientRect(); return { x:(a.clientX+b.clientX)/2-r.left-r.width/2, y:(a.clientY+b.clientY)/2-r.top-r.height/2 }; };
+
   const onWheel = (e)=>{
     e.preventDefault();
     const rect = stageRef.current.getBoundingClientRect();
-    const cx = e.clientX - rect.left - rect.width/2;
-    const cy = e.clientY - rect.top - rect.height/2;
-    zoom(e.deltaY<0?1.16:1/1.16, cx, cy);
+    zoom(e.deltaY<0?1.16:1/1.16, e.clientX-rect.left-rect.width/2, e.clientY-rect.top-rect.height/2);
   };
-  const onDown = (e)=>{ if(t.s<=1) return; setDragging(true); drag.current={ x:e.clientX, y:e.clientY, ox:t.x, oy:t.y }; };
-  const onMove = (e)=>{ if(!drag.current) return; setT(p=>({ ...p, x:drag.current.ox+(e.clientX-drag.current.x), y:drag.current.oy+(e.clientY-drag.current.y) })); };
-  const onUp = ()=>{ drag.current=null; setDragging(false); };
+  const onPointerDown = (e)=>{
+    stageRef.current.setPointerCapture && stageRef.current.setPointerCapture(e.pointerId);
+    ptrs.current.set(e.pointerId, e);
+    if(ptrs.current.size===2){
+      const [a,b] = [...ptrs.current.values()];
+      pinch.current = { dist:Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY), c:centreOf(a,b) };
+      pan.current = null; setDragging(false);
+    } else if(ptrs.current.size===1){
+      pan.current = { x:e.clientX, y:e.clientY };
+      setDragging(true);
+    }
+  };
+  const onPointerMove = (e)=>{
+    if(!ptrs.current.has(e.pointerId)) return;
+    ptrs.current.set(e.pointerId, e);
+    if(ptrs.current.size>=2 && pinch.current){
+      const [a,b] = [...ptrs.current.values()];
+      const dist = Math.hypot(a.clientX-b.clientX, a.clientY-b.clientY);
+      const factor = dist / pinch.current.dist;
+      if(factor && isFinite(factor)){ zoom(factor, pinch.current.c.x, pinch.current.c.y); pinch.current.dist = dist; pinch.current.c = centreOf(a,b); }
+    } else if(pan.current){
+      const dx = e.clientX-pan.current.x, dy = e.clientY-pan.current.y;
+      pan.current = { x:e.clientX, y:e.clientY };
+      setT(p => p.s<=1 ? p : ({ ...p, x:p.x+dx, y:p.y+dy }));
+    }
+  };
+  const onPointerUp = (e)=>{
+    ptrs.current.delete(e.pointerId);
+    if(ptrs.current.size<2) pinch.current = null;
+    if(ptrs.current.size===0){ pan.current = null; setDragging(false); }
+  };
 
   return (
-    <div className="lb" onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={onUp}>
+    <div className="lb">
       <div className="lb__bar">
         <div className="col" style={{gap:4}}>
           <div className="mono" style={{color:"#fff"}}>{project.n} — Plans & coupes</div>
@@ -49,12 +78,16 @@ function PlanLightbox({ project, onClose }){
         </div>
         <button className="lb__close" onClick={onClose}>Fermer <span style={{fontSize:15,lineHeight:1}}>✕</span></button>
       </div>
-      <div ref={stageRef} className={`lb__stage ${dragging?"dragging":""}`} onWheel={onWheel} onMouseDown={onDown} onDoubleClick={(e)=>{ const rect=stageRef.current.getBoundingClientRect(); zoom(t.s>1?1/t.s:1.8, e.clientX-rect.left-rect.width/2, e.clientY-rect.top-rect.height/2);} }>
-        <div className="lb__hint">Molette pour zoomer · glisser pour déplacer · double-clic</div>
+      <div ref={stageRef} className={`lb__stage ${dragging?"dragging":""}`}
+        onWheel={onWheel}
+        onPointerDown={onPointerDown} onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp} onPointerCancel={onPointerUp} onPointerLeave={onPointerUp}
+        onDoubleClick={(e)=>{ const rect=stageRef.current.getBoundingClientRect(); zoom(t.s>1?1/t.s:1.8, e.clientX-rect.left-rect.width/2, e.clientY-rect.top-rect.height/2);} }>
+        <div className="lb__hint">Pincez ou molette pour zoomer · glissez pour déplacer</div>
         <div className="lb__doc" style={{ transform:`translate(-50%,-50%) translate(${t.x}px,${t.y}px) scale(${t.s})` }}>
           <div className="lb__sheet" style={{ width:"min(82vw,1100px)", aspectRatio:"1100/760" }}>
             <PhPlan seed={project.id} detailed={true} />
-            <div style={{position:"absolute",left:18,top:14,fontFamily:"var(--mono)",fontSize:10,letterSpacing:".14em",color:"rgba(11,11,11,.55)"}}>dl-c · {project.n.toUpperCase()} · PLAN R+0</div>
+            <div style={{position:"absolute",left:18,top:14,fontFamily:"var(--mono)",fontSize:10,letterSpacing:".14em",color:"rgba(11,11,11,.55)"}}>{project.n.toUpperCase()} · PLAN R+0</div>
             <div style={{position:"absolute",right:18,top:14,fontFamily:"var(--mono)",fontSize:10,letterSpacing:".14em",color:"rgba(11,11,11,.55)"}}>{project.area}</div>
           </div>
         </div>

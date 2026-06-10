@@ -144,7 +144,7 @@ function Home({ navigate }){
       <section className="section wrap">
         <div className="eyebrow" style={{marginBottom:"clamp(24px,4vh,40px)"}}><span className="idx">R—03</span> Étude de cas <span className="ln"/> En direct</div>
         <div className="cap-head" style={{marginBottom:"clamp(28px,4vh,52px)"}}>
-          <Reveal><h2 className="h-lg">dl-c, architectes.<br/><span className="muted">Un portfolio construit comme un ouvrage.</span></h2></Reveal>
+          <Reveal><h2 className="h-lg">Agence d’architecture.<br/><span className="muted">Un portfolio construit comme un ouvrage.</span></h2></Reveal>
           <Reveal delay={2} className="col gap-m" style={{alignSelf:"end"}}>
             <p className="ink2 maxw-46" style={{fontSize:17}}>Grille vivante, lecture des plans en HD, mode contemplation, carte du territoire. Chaque interaction ci-dessous est réelle — c'est notre travail, pas une maquette.</p>
             <button className="btn-dark" style={{alignSelf:"flex-start"}} onClick={()=>navigate("savoir-faire")}>Voir la démonstration <Arrow d="right"/></button>
@@ -188,7 +188,7 @@ function Studio({ navigate }){
             <div className="member" key={i}>
               <Reveal className="member__media">
                 <img src={`${m.first.toLowerCase()}.png`} alt={m.first} style={{position:"absolute",inset:0,width:"100%",height:"100%",objectFit:"cover",objectPosition:"top"}} />
-                <div style={{position:"absolute",left:16,bottom:14}} className="mono">{m.short}</div>
+                <div style={{position:"absolute",left:16,bottom:14,color:"#fff",textShadow:"0 1px 10px rgba(0,0,0,.45)",zIndex:4}} className="mono">{m.full || m.first}</div>
               </Reveal>
               <Reveal delay={1}>
                 <div className="member__role mono" style={{marginBottom:18}}><span style={{color:"var(--ink)"}}>{m.n}</span> — {m.role}</div>

@@ -141,6 +141,7 @@
     monogram = "R",
     email = "contact.radar.paris@gmail.com",
     phone = "+33 6 03 62 20 81",
+    tel = "+33603622081",          // E.164 — used for the tap-to-call link
     website = "radar.paris",
     location = "Paris · 48.85°N",
     index = "05",
@@ -216,22 +217,29 @@
       cancelAnimationFrame(animRaf.current);
       clearTimeout(idleTimer.current);
       setDrag(true);
-      dragRef.current = { px: e.clientX, py: e.clientY };
+      // sx/sy = origine du geste, moved = a-t-on dépassé le seuil de glissement ?
+      dragRef.current = { px: e.clientX, py: e.clientY, sx: e.clientX, sy: e.clientY, moved: false };
       e.currentTarget.setPointerCapture?.(e.pointerId);
     }, []);
     const onMove = useCallback((e) => {
-      if (!dragRef.current) return;
-      const { px, py } = dragRef.current;
-      const dx = e.clientX - px, dy = e.clientY - py;
-      dragRef.current = { px: e.clientX, py: e.clientY };
+      const d = dragRef.current;
+      if (!d) return;
+      const dx = e.clientX - d.px, dy = e.clientY - d.py;
+      d.px = e.clientX; d.py = e.clientY;
+      if (Math.abs(e.clientX - d.sx) + Math.abs(e.clientY - d.sy) > 8) d.moved = true;
       setRot((r) => ({ ...r, y: r.y + dx * 0.6, x: clamp(r.x - dy * 0.6, -82, 82) }));
     }, []);
     const onUp = useCallback((e) => {
+      const d = dragRef.current;
       setDrag(false);
       dragRef.current = null;
       e.currentTarget.releasePointerCapture?.(e.pointerId);
+      // clic simple (pas de glissement) → proposer l'appel ; glissement → rotation seule
+      if (d && !d.moved) {
+        window.location.href = `tel:${tel}`;
+      }
       scheduleIdleSpin();
-    }, [scheduleIdleSpin]);
+    }, [scheduleIdleSpin, tel]);
 
     const setAxis = (k) => (e) => {
       setSpin(false);
@@ -289,6 +297,9 @@
       <div className="rdc-stage" style={{ "--rdc-w": width + "px" }}>
         <div
           className={"rdc-scene" + (drag ? " is-drag" : "")}
+          title="Cliquer pour appeler · glisser pour faire pivoter"
+          role="button"
+          aria-label={`Appeler le studio au ${phone}`}
           onPointerDown={onDown}
           onPointerMove={onMove}
           onPointerUp={onUp}

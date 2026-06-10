@@ -147,12 +147,12 @@ function App(){
   const render = ()=>{
     if(page==="savoir-faire") return <SavoirFaire navigate={navigate} />;
     if(page==="studio") return <Studio navigate={navigate} />;
-    if(page==="contact") return <div className="page page-enter"><Contact /></div>;
+    if(page==="contact") return <div className="page page--contact page-enter"><Contact /></div>;
     return <Home navigate={navigate} />;
   };
 
   return (
-    <div className="app">
+    <div className={`app ${page==="contact"?"app--dark":""}`}>
       {!loaded && <Loader onDone={()=>setLoaded(true)} />}
       {curtain && <div className={`curtain ${curtain}`} />}
       <Nav page={page} navigate={navigate} />

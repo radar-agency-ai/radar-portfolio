@@ -1,5 +1,5 @@
 /* ============================================================
-   SAVOIR-FAIRE — the live case study (dl-c) composing all demos
+   SAVOIR-FAIRE — the live case study composing all demos
    ============================================================ */
 const { useState:sfUseState } = React;
 
@@ -15,20 +15,26 @@ function SavoirFaire(){
     <div className="page page-enter">
       {/* intro */}
       <section className="section wrap" style={{paddingBottom:"clamp(40px,6vh,90px)"}}>
-        <div className="eyebrow" style={{marginBottom:40}}><span className="idx">02</span> Savoir-faire <span className="ln"/> Étude de cas en direct</div>
+        <div className="eyebrow" style={{marginBottom:40}}><span className="idx">02</span> Savoir-faire <span className="ln"/> Démonstration en direct</div>
         <div className="cap-head">
           <Reveal>
             <h1 className="display">Une démo,<br/><span className="italic thin">pas un argumentaire.</span></h1>
           </Reveal>
           <Reveal delay={2}>
-            <RevealText className="lede ink2" style={{maxWidth:"40ch"}}
-              text="Plutôt que de décrire ce que nous savons faire, nous l’avons construit. Voici une maquette vivante d’un portfolio pensée pour une agence d’architecture — chaque interaction ci-dessous est réelle." />
-            <div className="mono muted" style={{marginTop:24}}>Contenu fictif · client illustratif “dl-c”</div>
+            <RevealText className="lede ink2" style={{maxWidth:"44ch"}}
+              text="Nous avons développé une série de composants — les briques fondatrices d’un site d’agence d’architecture. Des exemples concrets de ce que nous savons construire, fonctionnels et transposables à votre projet." />
+            <div className="mono muted" style={{marginTop:24}}>Exemples de fonctionnalités · client fictif</div>
           </Reveal>
         </div>
 
-        {/* capability index */}
-        <div style={{marginTop:"clamp(48px,7vh,90px)",borderTop:"1px solid var(--line)"}}>
+        {/* capability index — framed as buildable capabilities, not a feature dump */}
+        <div className="cap-head" style={{marginTop:"clamp(48px,7vh,90px)",marginBottom:"clamp(26px,4vh,44px)"}}>
+          <Reveal><h2 className="h-md">Six exemples de fonctionnalités.</h2></Reveal>
+          <Reveal delay={2}>
+            <p className="ink2 maxw-46" style={{fontSize:17,lineHeight:1.5}}>Chacune est un composant réel, codé pour un usage précis — jamais un gabarit. Réunies, elles esquissent un site d’agence ; prises une à une, ce sont autant de preuves de savoir-faire. Tout est manipulable dans la démonstration plus bas.</p>
+          </Reveal>
+        </div>
+        <div style={{borderTop:"1px solid var(--line)"}}>
           {caps.map((c,i)=>(
             <Reveal key={c.id} className="flex" style={{borderBottom:"1px solid var(--line)",padding:"20px 0",alignItems:"baseline",gap:"clamp(16px,3vw,60px)",flexWrap:"wrap"}}>
               <span className="mono muted" style={{width:32}}>{String(i+1).padStart(2,"0")}</span>
@@ -43,7 +49,7 @@ function SavoirFaire(){
       <div className="casebar">
         <div className="casebar__in">
           <div className="flex center gap-m">
-            <span className="mono" style={{display:"flex",gap:9,alignItems:"center"}}><span className="dot" style={{width:6,height:6,borderRadius:"50%",background:"var(--ink)",display:"inline-block"}}/>dl-c — architectes</span>
+            <span className="mono" style={{display:"flex",gap:9,alignItems:"center"}}><span className="dot" style={{width:6,height:6,borderRadius:"50%",background:"var(--ink)",display:"inline-block"}}/>Visualiser les design par vous même</span>
           </div>
           <div className="casebar__tabs">
             {tabs.map(t=>(
